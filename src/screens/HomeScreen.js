@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
+import React, { useState, useRef, useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
@@ -8,10 +8,14 @@ import { colors, parameters } from '../global/styles';
 import { filterData } from '../global/data';
 import { mapStyle } from "../global/mapStyle";
 //import MapComponent from '../components/MapComponent';
+import RequestScreen from './RequestScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
+
+
+
   return (
     <View style={styles.container}>
         <View style={styles.header}>
@@ -31,9 +35,11 @@ const HomeScreen = () => {
                 <View style={styles.view1}>
                     <View style={styles.view8}>
                         <Text style={styles.text2}> Read a book. Take a nap. Stare out the window </Text>
-                        <View style={styles.button1}>
-                            <Text style={styles.button1Text}> Ride with Cholo </Text >
-                        </View>
+                        <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}>
+                            <View style={styles.button1}>
+                                <Text style={styles.button1Text}> Ride with Cholo </Text >
+                            </View>
+                        </TouchableOpacity>
                     </View>
                     <View>
                         <Image 
