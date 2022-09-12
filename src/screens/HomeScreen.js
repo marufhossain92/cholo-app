@@ -1,20 +1,18 @@
 import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
 
 import { colors, parameters } from '../global/styles';
 import { filterData } from '../global/data';
 import { mapStyle } from "../global/mapStyle";
-//import MapComponent from '../components/MapComponent';
+// import MapComponent from '../components/MapComponent';
 import RequestScreen from './RequestScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const HomeScreen = ({navigation}) => {
-
-
 
   return (
     <View style={styles.container}>
@@ -70,31 +68,32 @@ const HomeScreen = ({navigation}) => {
                 />
             </View>
 
-            <View style={styles.view3}>
-                <Text style ={styles.text3}> Where to? </Text>  
-                <View style ={styles.view4}>
-                    <Ionicons 
-                        type="material-community"
-                        name="time"
-                        color={colors.grey1}
-                        size={26}
-                    /> 
-                    <Text style ={{marginLeft:5}}> Now </Text> 
-                    <Ionicons 
-                        type="material-community"
-                        name="chevron-down"
-                        color={colors.grey1}
-                        size={26}
-                    />  
-                </View>     
-            </View>
-
+            <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}>
+                <View style={styles.view3}>
+                    <Text style ={styles.text3}> Where to? </Text>
+                    <View style ={styles.view4}>
+                        <Ionicons 
+                            type="material-community"
+                            name="time"
+                            color={colors.grey1}
+                            size={26}
+                        /> 
+                        <Text style ={{marginLeft:5}}> Now </Text> 
+                        <Ionicons 
+                            type="material-community"
+                            name="chevron-down"
+                            color={colors.grey1}
+                            size={26}
+                        />  
+                    </View>     
+                </View>
+            </TouchableOpacity>  
             <View style={styles.view5}>
                 <View style={styles.view6}>
                     <View style={styles.view7}>
                         <Ionicons 
                             type="material-community"
-                            name="navigate"
+                            name="location"
                             color={colors.black}
                             size={22}
                         />
@@ -114,18 +113,18 @@ const HomeScreen = ({navigation}) => {
                 </View>
             </View>
 
-            <View style={{...styles.view5, borderBottomWidth:0}}>
+            <View style={{...styles.view5, borderBottomWidth: 0}}>
                 <View style={styles.view6}>
                     <View style={styles.view7}>
                         <Ionicons 
                             type="material-community"
-                            name="navigate"
+                            name="location"
                             color={colors.black}
                             size={22}
                         />
                     </View>
                     <View>
-                        <Text style={{fontSize:18,color:colors.black}}> Niketon </Text>
+                        <Text style={{fontSize:18, color:colors.black}}> Niketon </Text>
                         <Text style={{color:colors.grey3}}> Road 2 </Text>
                     </View>
                 </View>

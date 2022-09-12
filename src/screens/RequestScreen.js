@@ -1,23 +1,63 @@
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
-import React from 'react';
+import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import React, { useState, useContext, useEffect, useRef, useMemo, useCallback } from 'react';
 import { colors, parameters } from '../global/styles';
 import MapComponent from '../components/MapComponent';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Ionicons, Avatar } from '@expo/vector-icons/Ionicons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { color } from 'react-native-reanimated';
+import BottomSheet, { BottomSheetFlatList, BottomSheetSectionList } from '@gorhom/bottom-sheet';
+import { rideData } from '../global/data';
+import { OriginContext, DestinationContext } from '../contexts/Contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RequestScreen({navigation, route}) {
+  // const {origin, dispatchOrigin} = useContext(OriginContext);
+  // const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
+  // const {destination, dispatchDestination} = useContext(DestinationContext);
+  // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+
+  const bottomsheet1 = useRef(1);
+
+  const snapPoints1 = useMemo(() => ['70%'], []);
+  const handleSheetChange1 = useCallback((index) => {}, []);
+
+  // useEffect(() => {
+  //   setUserOrigin({latitude: origin.latitude,
+  //     longitude: origin.longitude});
+  //   setUserDestination({latitude: destination.latitude,
+  //     longitude: destination.longitude})    
+  // }, [origin, destination]);
+
+  const renderFlatListItems = useCallback(({item}) => (
+    <View>
+      <View style={styles.view10}>
+        <View style={styles.view11}>
+          <Ionicons 
+            type="material-community"
+            name="location"
+            color={colors.white}
+            size={18}
+          />
+        </View>
+        <View>
+          <Text style={{fontSize:15, color:colors.grey1}}> {item.street} </Text> 
+          <Text style={{color:colors.grey4}}> {item.area} </Text>
+        </View>
+      </View>
+    </View>
+  ), []);
+
   return (
     <View style={styles.container}>
       <View style={styles.view1}>
         <Ionicons
           type="material-community"
-          name="arrow-left"
+          name="arrow-back"
           color={colors.grey1}
-          size={26}
+          size={32}
+          onPress={() => navigation.goBack()}
         />
       </View>
       <View style={styles.view2}>
@@ -38,8 +78,97 @@ export default function RequestScreen({navigation, route}) {
             />
           </View>
         </TouchableOpacity>
+        <View style ={styles.view4}>
+          <View>
+            <Image 
+              style = {styles.image1}
+              source ={require("../../assets/transit.png")}
+            />
+          </View>
+          <View>
+            <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}>
+              <View style={styles.view6}>
+                <Text style={styles.text1}> From where? </Text>
+              </View>
+            </TouchableOpacity>
+            <View style={styles.view7}>
+              <TouchableOpacity onPress={()=> {navigation.navigate("DestinationScreen")}}>
+                <View style={styles.view5}>
+                  <Text style={styles.text10}></Text>
+                </View>
+              </TouchableOpacity>
+            <View style={styles.view8}>
+              <Ionicons 
+                type="material-community"
+                name="add"
+                color={colors.black}
+                size={25}
+              />   
+            </View>
+          </View>
+        </View>             
       </View>
+    </View>
       <MapComponent />
+      <BottomSheet
+        ref={bottomsheet1}
+        //index={route.params.state}
+        snapPoints = {snapPoints1}
+        onChange={handleSheetChange1}
+      >
+        <BottomSheetFlatList
+          keyboardShouldPersistTaps = 'always'  
+          data={rideData}
+          keyExtractor={item=>item.id}
+          renderItem={renderFlatListItems}
+          contentContainerStyle={styles.contentContainer}
+          ListHeaderComponent={
+            <View style ={styles.view10}>
+              <View style={styles.view11}>
+                <Ionicons 
+                  type="material-community"
+                  name="star"
+                  color={colors.white}
+                  size={20}
+                />
+              </View>
+              <View>
+                  <Text style ={styles.text9}> Saved Places </Text> 
+              </View>
+            </View>
+          }
+          ListFooterComponent={
+            <View>
+              <View style={{...styles.view10, borderBottomWidth: 0}}>
+                <View style={styles.view11}>
+                  <Ionicons 
+                    type="material-community"
+                    name="location"
+                    color={colors.white}
+                    size={20}
+                  />
+                </View>
+                <View>
+                  <Text style={styles.text9}> Set location on map </Text> 
+                </View>
+              </View>
+              {/* <View style ={styles.view10}>
+                <View style ={styles.view11}>
+                  <Ionicons 
+                    type ="material-community"
+                    name ="skip-forward"
+                    color ={colors.white}
+                    size ={20}
+                  />
+                </View>
+                <View>
+                  <Text style ={styles.text9}> Enter destination later </Text> 
+                </View>
+              </View> */}
+            </View> 
+          }        
+        />
+      </BottomSheet>
     </View>
   )
 };
@@ -140,13 +269,13 @@ const styles = StyleSheet.create({
     flex: 5,
     flexDirection: "row",
     paddingVertical: 10,
-    borderBottomColor: colors.grey5,
+    borderBottomColor: colors.grey6,
     borderBottomWidth: 1,
     paddingHorizontal: 15
   },
 
   view11: {
-    backgroundColor: colors.grey,
+    backgroundColor: colors.grey3,
     height: 30,
     width: 30,
     borderRadius: 15,
