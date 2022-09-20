@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -15,7 +15,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const HomeScreen = ({navigation}) => {
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
         <View style={styles.header}>
             <View style={styles.icon1}>
                 <Ionicons 
@@ -166,7 +166,7 @@ const HomeScreen = ({navigation}) => {
             </View> 
         </ScrollView>
         <StatusBar style='light' backgroundColor='#2058c0' translucent={true} />
-    </View>
+    </SafeAreaView>
   )
 }
 

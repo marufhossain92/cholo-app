@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
 import React from 'react';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MapComponent from '../components/MapComponent';
@@ -10,7 +10,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const DestinationScreen = ({navigation}) => {
   return (
     <>
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
             {/* <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}> */}
                 <View style={styles.view1}>
                     <Ionicons
@@ -23,7 +23,7 @@ const DestinationScreen = ({navigation}) => {
                 </View>
             {/* </TouchableOpacity> */}
             <MapComponent />
-        </View>
+        </SafeAreaView>
     </>
   );
 };

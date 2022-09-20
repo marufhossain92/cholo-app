@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Dimensions, Image } from 'react-native';
+import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
 import React, { useState, useContext, useEffect, useRef, useMemo, useCallback } from 'react';
 import { colors, parameters } from '../global/styles';
 import MapComponent from '../components/MapComponent';
@@ -42,7 +42,7 @@ export default function RequestScreen({navigation, route}) {
           />
         </View>
         <View>
-          <Text style={{fontSize:15, color:colors.grey1}}> {item.street} </Text> 
+          <Text style={{fontSize: 15, color:colors.grey1}}> {item.street} </Text> 
           <Text style={{color:colors.grey4}}> {item.area} </Text>
         </View>
       </View>
@@ -50,7 +50,7 @@ export default function RequestScreen({navigation, route}) {
   ), []);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <View style={styles.view1}>
         <Ionicons
           type="material-community"
@@ -113,11 +113,11 @@ export default function RequestScreen({navigation, route}) {
       <BottomSheet
         ref={bottomsheet1}
         //index={route.params.state}
-        snapPoints = {snapPoints1}
+        snapPoints={snapPoints1}
         onChange={handleSheetChange1}
       >
         <BottomSheetFlatList
-          keyboardShouldPersistTaps = 'always'  
+          keyboardShouldPersistTaps='always'  
           data={rideData}
           keyExtractor={item=>item.id}
           renderItem={renderFlatListItems}
@@ -169,7 +169,7 @@ export default function RequestScreen({navigation, route}) {
           }        
         />
       </BottomSheet>
-    </View>
+    </SafeAreaView>
   )
 };
 

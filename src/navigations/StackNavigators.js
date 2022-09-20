@@ -12,17 +12,17 @@ export function HomeStack() {
             <Home.Screen 
                 name ="HomeScreen"
                 component = {HomeScreen}
-                options ={{headerShown:false}}
+                options ={{headerShown: false}}
             /> 
             <Home.Screen 
                 name ="RequestScreen"
                 component = {RequestScreen}
-                options ={{headerShown:false}}
+                options ={{headerShown: false}}
             /> 
             <Home.Screen 
                 name ="DestinationScreen"
                 component = {DestinationScreen}
-                options ={{headerShown:false}}
+                options ={{headerShown: false}}
             /> 
         </Home.Navigator>
     );
