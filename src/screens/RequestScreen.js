@@ -13,22 +13,22 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RequestScreen({navigation, route}) {
-  // const {origin, dispatchOrigin} = useContext(OriginContext);
-  // const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
-  // const {destination, dispatchDestination} = useContext(DestinationContext);
-  // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+  const {origin, dispatchOrigin} = useContext(OriginContext);
+  const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
+  const {destination, dispatchDestination} = useContext(DestinationContext);
+  const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
 
   const bottomsheet1 = useRef(1);
 
   const snapPoints1 = useMemo(() => ['70%'], []);
   const handleSheetChange1 = useCallback((index) => {}, []);
 
-  // useEffect(() => {
-  //   setUserOrigin({latitude: origin.latitude,
-  //     longitude: origin.longitude});
-  //   setUserDestination({latitude: destination.latitude,
-  //     longitude: destination.longitude})    
-  // }, [origin, destination]);
+  useEffect(() => {
+    setUserOrigin({latitude: origin.latitude,
+      longitude: origin.longitude});
+    setUserDestination({latitude: destination.latitude,
+      longitude: destination.longitude})    
+  }, [origin, destination]);
 
   const renderFlatListItems = useCallback(({item}) => (
     <View>
@@ -42,8 +42,8 @@ export default function RequestScreen({navigation, route}) {
           />
         </View>
         <View>
-          <Text style={{fontSize: 15, color:colors.grey1}}> {item.street} </Text> 
-          <Text style={{color:colors.grey4}}> {item.area} </Text>
+          <Text style={{fontSize: 15, color: colors.grey1}}> {item.street} </Text> 
+          <Text style={{color: colors.grey4}}> {item.area} </Text>
         </View>
       </View>
     </View>
@@ -57,7 +57,7 @@ export default function RequestScreen({navigation, route}) {
           name="arrow-back"
           color={colors.grey1}
           size={32}
-          onPress={() => navigation.goBack()}
+          onPress={() => {navigation.goBack()}}
         />
       </View>
       <View style={styles.view2}>
@@ -86,30 +86,32 @@ export default function RequestScreen({navigation, route}) {
             />
           </View>
           <View>
-            <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}>
+            <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
               <View style={styles.view6}>
                 <Text style={styles.text1}> From where? </Text>
               </View>
             </TouchableOpacity>
             <View style={styles.view7}>
-              <TouchableOpacity onPress={()=> {navigation.navigate("DestinationScreen")}}>
+              <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
                 <View style={styles.view5}>
                   <Text style={styles.text10}></Text>
                 </View>
               </TouchableOpacity>
             <View style={styles.view8}>
-              <Ionicons 
-                type="material-community"
-                name="add"
-                color={colors.black}
-                size={25}
-              />   
+              <TouchableOpacity>
+                <Ionicons 
+                  type="material-community"
+                  name="add"
+                  color={colors.black}
+                  size={25}
+                />
+              </TouchableOpacity>   
             </View>
           </View>
         </View>             
       </View>
     </View>
-      <MapComponent />
+      <MapComponent userOrigin ={userOrigin} userDestination = {userDestination} />
       <BottomSheet
         ref={bottomsheet1}
         //index={route.params.state}
@@ -191,8 +193,8 @@ const styles = StyleSheet.create({
 
   view1: {
     position: "absolute",
-    top: 25,
-    left: 12,
+    top: 46,
+    left: 10,
     backgroundColor: colors.white,
     height: 40,
     width: 40,
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   },
 
   view2: {
-    height: SCREEN_HEIGHT*0.21,
+    height: SCREEN_HEIGHT * 0.21,
     alignItems: "center",
     zIndex: 5,
     backgroundColor:colors.white

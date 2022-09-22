@@ -55,7 +55,7 @@ const HomeScreen = ({navigation}) => {
                     showsHorizontalScrollIndicator={false}
                     data={filterData}
                     keyExtractor={(item)=>item.id}
-                    renderItem= {({item})=>(
+                    renderItem={({item})=>(
                         <View style={styles.card}>
                             <View style={styles.view2}>
                                 <Image style={styles.image2} source = {item.image} />
@@ -68,7 +68,7 @@ const HomeScreen = ({navigation}) => {
                 />
             </View>
 
-            <TouchableOpacity onPress={()=> {navigation.navigate("RequestScreen")}}>
+            <TouchableOpacity onPress={() => {navigation.navigate("RequestScreen")}}>
                 <View style={styles.view3}>
                     <Text style ={styles.text3}> Where to? </Text>
                     <View style ={styles.view4}>
@@ -78,7 +78,7 @@ const HomeScreen = ({navigation}) => {
                             color={colors.grey1}
                             size={26}
                         /> 
-                        <Text style ={{marginLeft:5}}> Now </Text> 
+                        <Text style ={{marginLeft: 5}}> Now </Text> 
                         <Ionicons 
                             type="material-community"
                             name="chevron-down"
@@ -87,7 +87,8 @@ const HomeScreen = ({navigation}) => {
                         />  
                     </View>     
                 </View>
-            </TouchableOpacity>  
+            </TouchableOpacity>
+
             <View style={styles.view5}>
                 <View style={styles.view6}>
                     <View style={styles.view7}>
@@ -99,8 +100,8 @@ const HomeScreen = ({navigation}) => {
                         />
                     </View>
                     <View>
-                        <Text style={{fontSize:18,color:colors.black}}> Gulshan 1 </Text>
-                        <Text style={{color:colors.grey3}}> Road 135 </Text>
+                        <Text style={{fontSize: 18,color: colors.black}}> Gulshan 1 </Text>
+                        <Text style={{color: colors.grey3}}> Road 135 </Text>
                     </View>
                 </View>
                 <View>
@@ -124,8 +125,8 @@ const HomeScreen = ({navigation}) => {
                         />
                     </View>
                     <View>
-                        <Text style={{fontSize:18, color:colors.black}}> Niketon </Text>
-                        <Text style={{color:colors.grey3}}> Road 2 </Text>
+                        <Text style={{fontSize: 18, color: colors.black}}> Niketon </Text>
+                        <Text style={{color: colors.grey3}}> Road 2 </Text>
                     </View>
                 </View>
                 <View>
@@ -165,7 +166,7 @@ const HomeScreen = ({navigation}) => {
                 </MapView>         
             </View> 
         </ScrollView>
-        <StatusBar style='light' backgroundColor='#2058c0' translucent={true} />
+        <StatusBar style='dark' backgroundColor='#2058c0' translucent={true} />
     </SafeAreaView>
   )
 }

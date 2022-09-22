@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
 import { Text, StyleSheet, View, Image } from 'react-native';
 import { mapStyle} from "../global/mapStyle";
-import MapView, { PROVIDER_GOOGLE,} from 'react-native-maps'; 
+import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
 import { colors, parameters } from '../global/styles';
 import MapViewDirections from 'react-native-maps-directions';
 //import {GOOGLE_MAPS_APIKEY} from "@env";
 
 export default class MapComponent extends Component {
 
-  constructor(){
+  constructor() {
     super();
       this.state = {
 
       };
-    
+
       this._map = React.createRef(35);
   };
-    
+
   // componentDidUpdate() {
   //   setTimeout(() => {
   //     if(this.props.userDestination.latitude !== null) {
   //       this._map.current.fitToCoordinates(
-  //         [this.props.userOrigin, this.props.userDestination], 
+  //         [this.props.userOrigin, this.props.userDestination],
   //         {
   //           edgePadding:{top: 450, right: 50, left: 50, bottom: 350},
   //           animated:true
@@ -69,7 +69,7 @@ export default class MapComponent extends Component {
         //       strokeColor={colors.black}
         //     />
         //   }  */}
-        </MapView> 
+        </MapView>
       </View>
     )
   }
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     height:"100%",
     width:"100%"
   },
-        
+
   markerWrapOrigin: {
     //  alignItems: "center",
     // justifyContent: "center",
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
   },
-  
+ 
   markerOrigin2: {
     width: 20,
     height:20,
@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
     alignItems:"center",
     marginTop:2, 
     zIndex: 8
-  },    
-    
+  },
+
   view3: { 
     flexDirection:"row",
     alignItems:"center",
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     paddingVertical:2,
     //borderRadius:20
   },
-   
+
   view4: {
     position:"absolute",
     top:50,
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
     alignItems:"center",
     marginTop:2, 
     zIndex: 8
-  }, 
-   
+  },
+
   location: {
     width: 20,
     height: 20,
@@ -171,13 +171,12 @@ const styles = StyleSheet.create({
     backgroundColor:colors.black,
     alignItems:"center",
     justifyContent:"center"
-    
-  }, 
-       
+  },
+
   view9: {
     width:6,
     height:6,
     borderRadius:4,
     backgroundColor:"white"
-  }     
+  }
 });
