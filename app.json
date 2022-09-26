@@ -18,12 +18,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cholo-app",
+      "config": {
+        "googleMapsApiKey": "AIzaSyABmE17NMNm_nBt7CzDNp8AgyIouz1RELc"
+        }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.cholo-app",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyABmE17NMNm_nBt7CzDNp8AgyIouz1RELc"
+        },
+        "permissions": ["ACCESS_COARSE_LOCATION", "ACCESS_FINE_LOCATION", "FOREGROUND_SERVICE"]
       }
     },
     "web": {
