@@ -58,9 +58,9 @@ export const paymentOptions = [
 export const availableServices = ["Cholo Go", "CholoX", "Cholo connect", "Cholo Black", "Cholo Van", "Cholo Assist"];
 
 export const carsAround = [
-    {latitude: -26.207487, longitude: 28.236226},
-    {latitude: -26.202616, longitude: 28.227718},
-    {latitude: -26.202424, longitude: 28.236612},
-    {latitude: -26.208565, longitude: 28.237191},
-    {latitude: -26.203598, longitude: 28.239509},
+    {latitude: 23.777844, longitude: 90.411177},
+    {latitude: 23.777534, longitude: 90.411848},
+    {latitude: 23.775517, longitude: 90.412014},
+    {latitude: 23.774378, longitude: 90.414090},
+    {latitude: 23.777186, longitude: 90.414444},
 ];

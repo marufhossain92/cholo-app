@@ -1,18 +1,62 @@
 import { StyleSheet, Text, View, Dimensions, ScrollView, Image, FlatList, TouchableOpacity, SafeAreaView } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StatusBar } from 'expo-status-bar';
+import * as Location from 'expo-location';
 
 import { colors, parameters } from '../global/styles';
-import { filterData } from '../global/data';
+import { filterData, carsAround } from '../global/data';
 import { mapStyle } from "../global/mapStyle";
 // import MapComponent from '../components/MapComponent';
 import RequestScreen from './RequestScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-const HomeScreen = ({navigation}) => {
+export default function HomeScreen({navigation}) {
+
+const [latLng, setLatLng] = useState({});
+
+const checkPermission = async() => {
+    const hasPermission = await Location.requestForegroundPermissionsAsync();
+
+    if(hasPermission.status === 'granted'){
+        const permission = await askPermission();
+        return permission;
+    }
+
+    return true;
+};
+
+const askPermission = async() => {
+    const permission = await Location.requestForegroundPermissionsAsync();
+    return permission.status === 'granted';
+};
+
+//Get current user location
+const getLocation = async() => {
+    try {
+        const {granted} = await Location.requestForegroundPermissionsAsync();
+        
+        if(!granted) return;
+        
+        const {
+            coords: {latitude, longitude},
+        } = await Location.getCurrentPositionAsync();
+
+        setLatLng({latitude:latitude, longitude:longitude})
+    } catch (error) {
+        
+    }
+}
+
+const _map = useRef(1);
+
+useEffect(() => {
+    checkPermission();
+    getLocation()
+    //console.log(latlng)
+,[]});
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,7 +126,7 @@ const HomeScreen = ({navigation}) => {
                         <Ionicons 
                             type="material-community"
                             name="chevron-down"
-                            color={colors.grey1}
+                            color={colors.grey1}   
                             size={26}
                         />  
                     </View>     
@@ -137,41 +181,42 @@ const HomeScreen = ({navigation}) => {
                         size={26}
                     />
                 </View>
-            </View>  
+            </View>
 
             <Text style={styles.text4}> Around you </Text>
 
             {/* Google map */}
             <View style={{alignItems:"center", justifyContent:"center"}}>
                 <MapView
-                    //ref={_map}
+                    ref={_map}
                     provider={PROVIDER_GOOGLE}
                     style={styles.map}
                     customMapStyle={mapStyle}
                     showsUserLocation={true}
                     followsUserLocation={true}
-                    // initialRegion={{...carsAround[0], latitudeDelta:0.008, longitudeDelta:0.008}}
+                    initialRegion={{...carsAround[0], latitudeDelta:0.004, longitudeDelta:0.004}}
                     
                 >
-                    {/* {carsAround.map((item,index)=>
-                            <MapView.Marker coordinate = {item} key= {index.toString()}>
-                                <Image 
-                                    source = {require('../../assets/carMarker.png')}
-                                    style ={styles.carsAround}
-                                    resizeMode = "cover"
-                                />
-                            </MapView.Marker>
-                        )
-                    } */}
+                   {carsAround.map((item, index) => (
+                        <Marker 
+                            coordinate={item} 
+                            key={index.toString()} 
+                        >
+                            <Image 
+                                source={require('../../assets/carMarker.png')}
+                                style={styles.carsAround}
+                                resizeMode="cover"
+                            />
+                        </Marker>
+                    ))} 
                 </MapView>         
             </View> 
         </ScrollView>
-        <StatusBar style='dark' backgroundColor='#2058c0' translucent={true} />
+        <StatusBar style='dark' backgroundColor='#0000FF' translucent={true} />
     </SafeAreaView>
   )
-}
+};
 
-export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {

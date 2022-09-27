@@ -13,22 +13,22 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RequestScreen({navigation, route}) {
-  const {origin, dispatchOrigin} = useContext(OriginContext);
-  const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
-  const {destination, dispatchDestination} = useContext(DestinationContext);
-  const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+  // const {origin, dispatchOrigin} = useContext(OriginContext);
+  // const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
+  // const {destination, dispatchDestination} = useContext(DestinationContext);
+  // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
 
   const bottomsheet1 = useRef(1);
 
   const snapPoints1 = useMemo(() => ['70%'], []);
   const handleSheetChange1 = useCallback((index) => {}, []);
 
-  useEffect(() => {
-    setUserOrigin({latitude: origin.latitude,
-      longitude: origin.longitude});
-    setUserDestination({latitude: destination.latitude,
-      longitude: destination.longitude})    
-  }, [origin, destination]);
+  // useEffect(() => {
+  //   setUserOrigin({latitude: origin.latitude,
+  //     longitude: origin.longitude});
+  //   setUserDestination({latitude: destination.latitude,
+  //     longitude: destination.longitude})    
+  // }, [origin, destination]);
 
   const renderFlatListItems = useCallback(({item}) => (
     <View>
@@ -111,7 +111,7 @@ export default function RequestScreen({navigation, route}) {
         </View>             
       </View>
     </View>
-      <MapComponent userOrigin ={userOrigin} userDestination = {userDestination} />
+      <MapComponent />
       <BottomSheet
         ref={bottomsheet1}
         //index={route.params.state}
