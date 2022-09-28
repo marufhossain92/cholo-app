@@ -1,13 +1,21 @@
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
-import React from 'react';
+import React, { useState, useRef} from 'react';
+import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import MapComponent from '../components/MapComponent';
+import { GOOGLE_MAPS_APIKEY } from '@env';
+//import MapComponent from '../components/MapComponent';
 import { colors, parameters } from '../global/styles';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function DestinationScreen({navigation, route}) {
+
+const textInput1 = useRef(4);
+const textInput2 = useRef(5);
+
+const[destination,setDestination] = useState(false)
+
   return (
     <SafeAreaView style={styles.container}>
         <View style={styles.view1}>
@@ -40,7 +48,35 @@ export default function DestinationScreen({navigation, route}) {
                     {/* </View> */}
                 </TouchableOpacity>
             </View>
-        <MapComponent />
+            <GooglePlacesAutocomplete 
+                nearbyPlacesAPI = 'GooglePlacesSearch'
+                placeholder ="From..."
+                listViewDisplayed = "auto"
+                debounce ={400}
+                currentLocation ={true}
+                ref ={textInput1}
+                minLength ={2}
+                enablePoweredByContainer = {false}
+                fetchDetails ={true}
+                autoFocus ={true}
+                styles = {autoComplete}
+                query ={{
+                    key:GOOGLE_MAPS_APIKEY,
+                    language:"en"
+                }}
+
+                onPress= {(data, details = null)=>{
+                    dispatchOrigin({type:"ADD_ORIGIN",payload:{
+                        latitude:details.geometry.location.lat,
+                        longitude:details.geometry.location.lng,
+                        address:details.formatted_address,
+                        name:details.name
+                    }})
+
+                    setDestination(true)
+                }}
+
+            />
     </SafeAreaView>
   );
 };

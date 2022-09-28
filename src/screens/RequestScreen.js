@@ -88,13 +88,13 @@ export default function RequestScreen({navigation, route}) {
           <View>
             <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
               <View style={styles.view6}>
-                <Text style={styles.text1}> From where? </Text>
+                <Text style={styles.text1}> Current Location </Text>
               </View>
             </TouchableOpacity>
             <View style={styles.view7}>
               <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
                 <View style={styles.view5}>
-                  <Text style={styles.text10}></Text>
+                  <Text style={styles.text10}> To where? </Text>
                 </View>
               </TouchableOpacity>
             <View style={styles.view8}>
@@ -524,7 +524,8 @@ const styles = StyleSheet.create({
   },
 
   text10: {
-    color: colors.grey2,
-    paddingLeft: 10
+    color: colors.grey1,
+    paddingLeft: 10,
+    fontSize: 16
   }
 });
