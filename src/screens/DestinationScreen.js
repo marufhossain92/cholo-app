@@ -1,20 +1,25 @@
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
-import React, { useState, useRef} from 'react';
+import React, { useState, useContext, useRef} from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { GOOGLE_MAPS_APIKEY } from '@env';
-//import MapComponent from '../components/MapComponent';
 import { colors, parameters } from '../global/styles';
+
+import { OriginContext, DestinationContext } from '../contexts/Contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function DestinationScreen({navigation, route}) {
+//navigator.geolocation = require('react-native-geolocation-service');
+
+export default function DestinationScreen({navigation}) {
+const {dispatchOrigin} = useContext(OriginContext);
+//const {dispatchDestination} = useContext(DestinationContext);
 
 const textInput1 = useRef(4);
 const textInput2 = useRef(5);
 
-const[destination,setDestination] = useState(false)
+const[destination, setDestination] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,6 +59,7 @@ const[destination,setDestination] = useState(false)
                 listViewDisplayed = "auto"
                 debounce ={400}
                 currentLocation ={true}
+                currentLocationLabel='Current location'
                 ref ={textInput1}
                 minLength ={2}
                 enablePoweredByContainer = {false}
@@ -62,20 +68,22 @@ const[destination,setDestination] = useState(false)
                 styles = {autoComplete}
                 query ={{
                     key:GOOGLE_MAPS_APIKEY,
-                    language:"en"
+                    language:"en",
+                    components: 'country:bd'
                 }}
 
                 onPress= {(data, details = null)=>{
-                    dispatchOrigin({type:"ADD_ORIGIN",payload:{
+                    dispatchOrigin({type:"ADD_ORIGIN", payload:{
                         latitude:details.geometry.location.lat,
                         longitude:details.geometry.location.lng,
                         address:details.formatted_address,
                         name:details.name
                     }})
 
-                    setDestination(true)
-                }}
+                    navigation.goBack();
 
+                    // setDestination(true)
+                }}
             />
     </SafeAreaView>
   );

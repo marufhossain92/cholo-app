@@ -1,10 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { OriginContextProvider } from './src/contexts/Contexts';
 import RoootNavigator from './src/navigations/RootNavigator';
 
 export default function App() {
   return (
-    <RoootNavigator/>
+    <OriginContextProvider>
+      <RoootNavigator/>
+    </OriginContextProvider>
+    
   );
 }
 

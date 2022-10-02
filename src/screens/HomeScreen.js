@@ -8,55 +8,50 @@ import * as Location from 'expo-location';
 import { colors, parameters } from '../global/styles';
 import { filterData, carsAround } from '../global/data';
 import { mapStyle } from "../global/mapStyle";
-// import MapComponent from '../components/MapComponent';
 import RequestScreen from './RequestScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function HomeScreen({navigation}) {
+const HomeScreen = ({navigation}) => {
 
-const [latLng, setLatLng] = useState({});
+    const [latlng, setLatLng] = useState({});
+    
+    // Location Permission check
+    const checkPermission =async()=>{
+        const hasPermission = await Location.requestForegroundPermissionsAsync();
+        if(hasPermission.status === 'granted') {
+            const permission = await askPermission();
+            return permission;
+        }
+        return true;
+    };
+    
+    //ask permission function
+    const askPermission = async() => {
+        const permission = await Location.requestForegroundPermissionsAsync();
+        return permission.status === 'granted';
+    };
 
-const checkPermission = async() => {
-    const hasPermission = await Location.requestForegroundPermissionsAsync();
+    const getLocation = async() => {
+        try{
+            const {granted} = await Location.requestForegroundPermissionsAsync();
+            if(!granted) return;
+            const {
+                coords:{latitude,longitude},
+            } = await Location.getCurrentPositionAsync();
+            setLatLng({latitude:latitude, longitude:longitude});
+        }catch(err){
+    
+        }
+    };
 
-    if(hasPermission.status === 'granted'){
-        const permission = await askPermission();
-        return permission;
-    }
+    const _map = useRef(1);
 
-    return true;
-};
-
-const askPermission = async() => {
-    const permission = await Location.requestForegroundPermissionsAsync();
-    return permission.status === 'granted';
-};
-
-//Get current user location
-const getLocation = async() => {
-    try {
-        const {granted} = await Location.requestForegroundPermissionsAsync();
-        
-        if(!granted) return;
-        
-        const {
-            coords: {latitude, longitude},
-        } = await Location.getCurrentPositionAsync();
-
-        setLatLng({latitude:latitude, longitude:longitude})
-    } catch (error) {
-        
-    }
-}
-
-const _map = useRef(1);
-
-useEffect(() => {
-    checkPermission();
-    getLocation()
-    //console.log(latlng)
-,[]});
+    useEffect(() => {
+        checkPermission();
+        getLocation()
+       //console.log(latlng)
+    , []})
 
   return (
     <SafeAreaView style={styles.container}>
@@ -126,7 +121,7 @@ useEffect(() => {
                         <Ionicons 
                             type="material-community"
                             name="chevron-down"
-                            color={colors.grey1}   
+                            color={colors.grey1}
                             size={26}
                         />  
                     </View>     
@@ -181,7 +176,7 @@ useEffect(() => {
                         size={26}
                     />
                 </View>
-            </View>
+            </View>  
 
             <Text style={styles.text4}> Around you </Text>
 
@@ -194,29 +189,31 @@ useEffect(() => {
                     customMapStyle={mapStyle}
                     showsUserLocation={true}
                     followsUserLocation={true}
+                    toolbarEnabled={true}
+                    zoomEnabled={true}
                     initialRegion={{...carsAround[0], latitudeDelta:0.004, longitudeDelta:0.004}}
                     
                 >
-                   {carsAround.map((item, index) => (
-                        <Marker 
-                            coordinate={item} 
-                            key={index.toString()} 
-                        >
-                            <Image 
-                                source={require('../../assets/carMarker.png')}
-                                style={styles.carsAround}
-                                resizeMode="cover"
-                            />
-                        </Marker>
-                    ))} 
+                    {carsAround.map((item, index) => (
+                                <Marker coordinate = {item} key= {index.toString()}>
+                                    <Image 
+                                        source={require('../../assets/carMarker.png')}
+                                        style={styles.carsAround}
+                                        resizeMode="cover"
+                                    />
+                                </Marker>
+                            )
+                        )
+                    }
                 </MapView>         
             </View> 
         </ScrollView>
-        <StatusBar style='dark' backgroundColor='#0000FF' translucent={true} />
+        <StatusBar style='dark' backgroundColor='#2058c0' translucent={true} />
     </SafeAreaView>
   )
-};
+}
 
+export default HomeScreen
 
 const styles = StyleSheet.create({
     container: {

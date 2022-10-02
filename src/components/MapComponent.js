@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image } from 'react-native';
+import { Text, StyleSheet, View, Image, Dimensions } from 'react-native';
 import { mapStyle} from "../global/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
 import { colors, parameters } from '../global/styles';
 import MapViewDirections from 'react-native-maps-directions';
-//import {GOOGLE_MAPS_APIKEY} from "@env";
+import { GOOGLE_MAPS_APIKEY } from "@env";
 
 export default class MapComponent extends Component {
 
@@ -16,6 +16,10 @@ export default class MapComponent extends Component {
 
       this._map = React.createRef(35);
   };
+
+  componentDidMount() {
+    console.log(this.props.userOrigin);
+  }
 
   // componentDidUpdate() {
   //   setTimeout(() => {
@@ -35,40 +39,51 @@ export default class MapComponent extends Component {
     return (
       <View>
         <MapView
-          provider ={PROVIDER_GOOGLE}
-          style = {styles.map}
-          customMapStyle ={mapStyle}
+          ref={this._map}
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          customMapStyle={mapStyle}
           showsUserLocation={true}
           followsUserLocation={true}
-          //  ref = {this._map}
+          rotateEnabled={true}
+          toolbarEnabled={true}
+          zoomEnabled={true}
+          region={{
+            latitude: 23.8103,
+            longitude: 90.4125,
+            latitudeDelta: 0.07,
+            longitudeDelta: 0.07,
+          }}
         >
-        {/* //   { this.props.userOrigin.latitude != null &&   
-        //     <MapView.Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5,y:0.5}} >
-        //         <Image 
-        //             source ={require('../../assets/location.png')}
-        //             style ={styles.markerOrigin2}
-        //             resizeMode ="cover"
-        //         />
-        //     </MapView.Marker>
-        //   }
-        //   { this.props.userDestination.latitude != null &&   
-        //     <MapView.Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
-        //         <Image 
-        //             source ={require('../../assets/location.png')}
-        //             style ={styles.markerDestination}
-        //             resizeMode ="cover"
-        //         />
-        //     </MapView.Marker>
-        //   }
-        //   {this.props.userDestination.latitude !== null &&
-        //     <MapViewDirections 
-        //       origin={this.props.userOrigin}
-        //       destination={this.props.userDestination}
-        //       apikey={GOOGLE_MAPS_APIKEY} // Need to generate API KEY
-        //       strokeWidth={4}
-        //       strokeColor={colors.black}
-        //     />
-        //   }  */}
+          { this.props.userOrigin.latitude != null &&   
+            <MapView.Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5, y:0.5}} >
+                <Image 
+                    source={require('../../assets/location.png')}
+                    style={styles.markerOrigin2}
+                    resizeMode="cover"
+                />
+            </MapView.Marker>
+          }
+
+          {/* { this.props.userDestination.latitude != null &&   
+            <MapView.Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
+                <Image 
+                    source ={require('../../assets/location.png')}
+                    style ={styles.markerDestination}
+                    resizeMode ="cover"
+                />
+            </MapView.Marker>
+          }
+
+          { this.props.userDestination.latitude !== null &&
+            <MapViewDirections 
+              origin={this.props.userOrigin}
+              destination={this.props.userDestination}
+              apikey={GOOGLE_MAPS_APIKEY}
+              strokeWidth={4}
+              strokeColor={colors.black}
+            />
+          } */}
         </MapView>
       </View>
     )
@@ -77,15 +92,17 @@ export default class MapComponent extends Component {
 
 const styles = StyleSheet.create({
   map: {
-    height:"100%",
-    width:"100%"
+    // height:"100%",
+    // width:"100%",
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
   },
 
   markerWrapOrigin: {
     //  alignItems: "center",
     // justifyContent: "center",
-    width:40,
-    height:20,
+    width: 40,
+    height: 20,
     // marginTop:0
   },
 

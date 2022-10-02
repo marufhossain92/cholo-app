@@ -13,22 +13,20 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function RequestScreen({navigation, route}) {
-  // const {origin, dispatchOrigin} = useContext(OriginContext);
-  // const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
+  const {origin, dispatchOrigin} = useContext(OriginContext);
+  const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
   // const {destination, dispatchDestination} = useContext(DestinationContext);
   // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
 
   const bottomsheet1 = useRef(1);
 
-  const snapPoints1 = useMemo(() => ['70%'], []);
+  const snapPoints1 = useMemo(() => ['40%'], []);
   const handleSheetChange1 = useCallback((index) => {}, []);
 
-  // useEffect(() => {
-  //   setUserOrigin({latitude: origin.latitude,
-  //     longitude: origin.longitude});
-  //   setUserDestination({latitude: destination.latitude,
-  //     longitude: destination.longitude})    
-  // }, [origin, destination]);
+  useEffect(() => {
+    setUserOrigin({latitude: origin.latitude, longitude: origin.longitude});
+    // setUserDestination({latitude: destination.latitude, longitude: destination.longitude})    
+  }, [origin]);
 
   const renderFlatListItems = useCallback(({item}) => (
     <View>
@@ -92,7 +90,7 @@ export default function RequestScreen({navigation, route}) {
               </View>
             </TouchableOpacity>
             <View style={styles.view7}>
-              <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
+              <TouchableOpacity>
                 <View style={styles.view5}>
                   <Text style={styles.text10}> To where? </Text>
                 </View>
@@ -111,12 +109,13 @@ export default function RequestScreen({navigation, route}) {
         </View>             
       </View>
     </View>
-      <MapComponent />
+      <MapComponent userOrigin={userOrigin} />
       <BottomSheet
         ref={bottomsheet1}
         //index={route.params.state}
         snapPoints={snapPoints1}
         onChange={handleSheetChange1}
+        enablePanDownToClose={true}
       >
         <BottomSheetFlatList
           keyboardShouldPersistTaps='always'  
