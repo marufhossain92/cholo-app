@@ -21,6 +21,7 @@ export const OriginContextProvider = (props) => {
 };
 
 
+<<<<<<< Updated upstream
 // export const DestinationContextProvider = (props) => {
 //     const[destination,dispatchDestination] = useReducer(DestinationReducer, {
 //         latitude: null,
@@ -36,3 +37,20 @@ export const OriginContextProvider = (props) => {
 //         </DestinationContext.Provider>
 //     );
 // };
+=======
+export const DestinationContextProvider = (props) => {
+    const[destination, dispatchDestination] = useReducer(DestinationReducer, {
+        latitude: null,
+        longitude: null,
+        address: "",
+        name: ""
+    });
+    return(
+        <DestinationContext.Provider
+            value={{destination, dispatchDestination}}
+        >
+            {props.children}
+        </DestinationContext.Provider>
+    );
+};
+>>>>>>> Stashed changes

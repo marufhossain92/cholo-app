@@ -15,8 +15,13 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 export default function RequestScreen({navigation, route}) {
   const {origin, dispatchOrigin} = useContext(OriginContext);
   const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
+<<<<<<< Updated upstream
   // const {destination, dispatchDestination} = useContext(DestinationContext);
   // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+=======
+  const {destination, dispatchDestination} = useContext(DestinationContext);
+  const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+>>>>>>> Stashed changes
 
   const bottomsheet1 = useRef(1);
 
@@ -24,9 +29,17 @@ export default function RequestScreen({navigation, route}) {
   const handleSheetChange1 = useCallback((index) => {}, []);
 
   useEffect(() => {
+<<<<<<< Updated upstream
     setUserOrigin({latitude: origin.latitude, longitude: origin.longitude});
     // setUserDestination({latitude: destination.latitude, longitude: destination.longitude})    
   }, [origin]);
+=======
+    setUserOrigin({latitude: origin.latitude,
+      longitude: origin.longitude});
+    setUserDestination({latitude: destination.latitude,
+      longitude: destination.longitude})    
+  }, [origin, destination]);
+>>>>>>> Stashed changes
 
   const renderFlatListItems = useCallback(({item}) => (
     <View>

@@ -55,17 +55,25 @@ const[destination, setDestination] = useState(false);
             </View>
             <GooglePlacesAutocomplete 
                 nearbyPlacesAPI = 'GooglePlacesSearch'
-                placeholder ="From..."
+                placeholder = "From..."
                 listViewDisplayed = "auto"
+<<<<<<< Updated upstream
                 debounce ={400}
                 currentLocation ={true}
                 currentLocationLabel='Current location'
                 ref ={textInput1}
                 minLength ={2}
+=======
+                debounce = {400}
+                currentLocation = {true}
+                ref = {textInput1}
+                minLength = {2}
+>>>>>>> Stashed changes
                 enablePoweredByContainer = {false}
-                fetchDetails ={true}
-                autoFocus ={true}
+                fetchDetails = {true}
+                autoFocus = {true}
                 styles = {autoComplete}
+<<<<<<< Updated upstream
                 query ={{
                     key:GOOGLE_MAPS_APIKEY,
                     language:"en",
@@ -78,12 +86,47 @@ const[destination, setDestination] = useState(false);
                         longitude:details.geometry.location.lng,
                         address:details.formatted_address,
                         name:details.name
+=======
+                query = {{
+                    key: GOOGLE_MAPS_APIKEY,
+                    language: "en",
+                    components: "country:bd"
+                }}
+
+                onPress = {(data, details = null) => {
+                    dispatchOrigin({type: "ADD_ORIGIN", payload: {
+                        latitude: details.geometry.location.lat,
+                        longitude: details.geometry.location.lng,
+                        address: details.formatted_address,
+                        name: details.name
+>>>>>>> Stashed changes
                     }})
 
                     navigation.goBack();
 
+<<<<<<< Updated upstream
                     // setDestination(true)
                 }}
+=======
+                listEmptyComponent = {() => (
+                    <View style={{flex: 1, paddingLeft: 15}}>
+                        <Text> No results were found </Text>
+                    </View>
+                )}
+
+                predefinedPlaces = {[
+                    {
+                      type: 'favorite',
+                      description: 'Work Place',
+                      geometry: {location: {lat: 23.777848, lng: 90.411240}},
+                    },
+                    {
+                      type: 'favorite',
+                      description: 'North End Coffee',
+                      geometry: {location: {lat: 23.785704, lng: 90.417212}},
+                    },
+                ]}
+>>>>>>> Stashed changes
             />
     </SafeAreaView>
   );

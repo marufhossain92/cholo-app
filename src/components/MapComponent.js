@@ -4,7 +4,11 @@ import { mapStyle} from "../global/mapStyle";
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
 import { colors, parameters } from '../global/styles';
 import MapViewDirections from 'react-native-maps-directions';
+<<<<<<< Updated upstream
 import { GOOGLE_MAPS_APIKEY } from "@env";
+=======
+import {GOOGLE_MAPS_APIKEY} from "@env";
+>>>>>>> Stashed changes
 
 export default class MapComponent extends Component {
 
@@ -17,6 +21,7 @@ export default class MapComponent extends Component {
       this._map = React.createRef(35);
   };
 
+<<<<<<< Updated upstream
   componentDidMount() {
     console.log(this.props.userOrigin);
   }
@@ -34,6 +39,21 @@ export default class MapComponent extends Component {
   //     }
   //   }, 500);
   // };
+=======
+  componentDidUpdate() {
+    setTimeout(() => {
+      if(this.props.userDestination.latitude !== null) {
+        this._map.current.fitToCoordinates(
+          [this.props.userOrigin, this.props.userDestination],
+          {
+            edgePadding:{top: 450, right: 50, left: 50, bottom: 350},
+            animated:true
+          }
+        )
+      }
+    }, 500);
+  };
+>>>>>>> Stashed changes
 
   render() {
     return (
@@ -45,6 +65,7 @@ export default class MapComponent extends Component {
           customMapStyle={mapStyle}
           showsUserLocation={true}
           followsUserLocation={true}
+<<<<<<< Updated upstream
           rotateEnabled={true}
           toolbarEnabled={true}
           zoomEnabled={true}
@@ -75,6 +96,29 @@ export default class MapComponent extends Component {
             </MapView.Marker>
           }
 
+=======
+          ref = {this._map}
+        >
+          { this.props.userOrigin.latitude != null &&
+            <MapView.Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5,y:0.5}} >
+              <Image 
+                source ={require('../../assets/location.png')}
+                style ={styles.markerOrigin2}
+                resizeMode ="cover"
+              />
+            </MapView.Marker>
+          }
+         
+          { this.props.userDestination.latitude != null &&   
+            <MapView.Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
+              <Image 
+                source ={require('../../assets/location.png')}
+                style ={styles.markerDestination}
+                resizeMode ="cover"
+              />
+            </MapView.Marker>
+          }
+>>>>>>> Stashed changes
           { this.props.userDestination.latitude !== null &&
             <MapViewDirections 
               origin={this.props.userOrigin}
@@ -83,7 +127,11 @@ export default class MapComponent extends Component {
               strokeWidth={4}
               strokeColor={colors.black}
             />
+<<<<<<< Updated upstream
           } */}
+=======
+          }  
+>>>>>>> Stashed changes
         </MapView>
       </View>
     )
