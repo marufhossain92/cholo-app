@@ -1,14 +1,15 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { OriginContextProvider } from './src/contexts/Contexts';
+import { OriginContextProvider, DestinationContextProvider } from './src/contexts/Contexts';
 import RoootNavigator from './src/navigations/RootNavigator';
 
 export default function App() {
   return (
-    <OriginContextProvider>
-      <RoootNavigator/>
-    </OriginContextProvider>
-    
+    <DestinationContextProvider>
+      <OriginContextProvider>
+        <RoootNavigator/>
+      </OriginContextProvider>
+    </DestinationContextProvider>
   );
 }
 

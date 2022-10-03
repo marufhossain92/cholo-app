@@ -1,124 +1,80 @@
-import React, { Component } from 'react';
-import { Text, StyleSheet, View, Image, Dimensions } from 'react-native';
-import { mapStyle} from "../global/mapStyle";
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; 
-import { colors, parameters } from '../global/styles';
+import React, { Component } from 'react'
+import { Text, StyleSheet, View, Image } from 'react-native'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
-<<<<<<< Updated upstream
+
+import { mapStyle } from "../global/mapStyle"
+import { colors } from '../global/styles';
 import { GOOGLE_MAPS_APIKEY } from "@env";
-=======
-import {GOOGLE_MAPS_APIKEY} from "@env";
->>>>>>> Stashed changes
 
 export default class MapComponent extends Component {
 
   constructor() {
     super();
-      this.state = {
-
-      };
-
-      this._map = React.createRef(35);
+    this.state = {};
+  
+    this._map = React.createRef(35);
   };
 
-<<<<<<< Updated upstream
-  componentDidMount() {
-    console.log(this.props.userOrigin);
-  }
-
-  // componentDidUpdate() {
-  //   setTimeout(() => {
-  //     if(this.props.userDestination.latitude !== null) {
-  //       this._map.current.fitToCoordinates(
-  //         [this.props.userOrigin, this.props.userDestination],
-  //         {
-  //           edgePadding:{top: 450, right: 50, left: 50, bottom: 350},
-  //           animated:true
-  //         }
-  //       )
-  //     }
-  //   }, 500);
-  // };
-=======
   componentDidUpdate() {
     setTimeout(() => {
       if(this.props.userDestination.latitude !== null) {
         this._map.current.fitToCoordinates(
           [this.props.userOrigin, this.props.userDestination],
           {
-            edgePadding:{top: 450, right: 50, left: 50, bottom: 350},
-            animated:true
+            edgePadding: {top: 450, right: 50, left: 50, bottom: 350},
+            animated: true
           }
         )
       }
     }, 500);
   };
->>>>>>> Stashed changes
 
   render() {
     return (
       <View>
-        <MapView
-          ref={this._map}
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          customMapStyle={mapStyle}
-          showsUserLocation={true}
-          followsUserLocation={true}
-<<<<<<< Updated upstream
-          rotateEnabled={true}
-          toolbarEnabled={true}
-          zoomEnabled={true}
-          region={{
-            latitude: 23.8103,
-            longitude: 90.4125,
-            latitudeDelta: 0.07,
-            longitudeDelta: 0.07,
-          }}
-        >
-          { this.props.userOrigin.latitude != null &&   
-            <MapView.Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5, y:0.5}} >
-                <Image 
-                    source={require('../../assets/location.png')}
-                    style={styles.markerOrigin2}
-                    resizeMode="cover"
+        {this.props.userOrigin.latitude != null && (
+          <MapView
+            ref={this._map}
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            customMapStyle={mapStyle}
+            showsUserLocation={true}
+            followsUserLocation={true}
+            rotateEnabled={true}
+            toolbarEnabled={true}
+            zoomEnabled={true}
+            region={{
+              latitude: 23.8103,
+              longitude: 90.4125,
+              latitudeDelta: 0.07,
+              longitudeDelta: 0.07,
+            }}
+          >
+            {this.props.userOrigin.latitude != null && (
+              
+              <Marker
+                coordinate={this.props.userOrigin}
+                anchor={{ x: 0.5, y: 0.5 }}
+              >
+                <Image
+                  source={require("../../assets/location.png")}
+                  style={styles.markerOrigin2}
+                  resizeMode="cover"
                 />
-            </MapView.Marker>
-          }
+              </Marker>
+            )}
 
-          {/* { this.props.userDestination.latitude != null &&   
-            <MapView.Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
+          { this.props.userDestination.latitude != null &&   
+            <Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
                 <Image 
                     source ={require('../../assets/location.png')}
                     style ={styles.markerDestination}
                     resizeMode ="cover"
                 />
-            </MapView.Marker>
+            </Marker>
           }
 
-=======
-          ref = {this._map}
-        >
-          { this.props.userOrigin.latitude != null &&
-            <MapView.Marker coordinate = {this.props.userOrigin} anchor = {{x:0.5,y:0.5}} >
-              <Image 
-                source ={require('../../assets/location.png')}
-                style ={styles.markerOrigin2}
-                resizeMode ="cover"
-              />
-            </MapView.Marker>
-          }
-         
-          { this.props.userDestination.latitude != null &&   
-            <MapView.Marker coordinate = {this.props.userDestination} anchor = {{x:0.5,y:0.5}} >
-              <Image 
-                source ={require('../../assets/location.png')}
-                style ={styles.markerDestination}
-                resizeMode ="cover"
-              />
-            </MapView.Marker>
-          }
->>>>>>> Stashed changes
           { this.props.userDestination.latitude !== null &&
             <MapViewDirections 
               origin={this.props.userOrigin}
@@ -127,12 +83,9 @@ export default class MapComponent extends Component {
               strokeWidth={4}
               strokeColor={colors.black}
             />
-<<<<<<< Updated upstream
-          } */}
-=======
-          }  
->>>>>>> Stashed changes
-        </MapView>
+          }
+          </MapView>
+        )}
       </View>
     )
   }
@@ -140,10 +93,10 @@ export default class MapComponent extends Component {
 
 const styles = StyleSheet.create({
   map: {
-    // height:"100%",
-    // width:"100%",
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
+    height: "100%",
+    width: "100%",
+    // width: Dimensions.get('window').width,
+    // height: Dimensions.get('window').height,
   },
 
   markerWrapOrigin: {
@@ -151,27 +104,27 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     width: 40,
     height: 20,
-    // marginTop:0
+    // marginTop: 0
   },
 
   markerOrigin: {
     width: 16,
     height: 16,
-    borderRadius:8
+    borderRadius: 8
   },
 
   destination: {
-    width:20,
-    height:20,
-    backgroundColor:colors.black,
-    alignItems:"center",
-    justifyContent:"center"
+    width: 20,
+    height: 20,
+    backgroundColor: colors.black,
+    alignItems: "center",
+    justifyContent: "center"
   },
 
   view1: {
-    width:7,
-    height:7,
-    backgroundColor:colors.white
+    width: 7,
+    height: 7,
+    backgroundColor: colors.white
   },
 
   markerDestination: {
@@ -181,67 +134,67 @@ const styles = StyleSheet.create({
  
   markerOrigin2: {
     width: 20,
-    height:20,
-    borderRadius:10
+    height: 20,
+    borderRadius: 10
   },
 
   car: {
-    paddingTop:0,
+    paddingTop: 0,
     width: 40,
     height: 20,
   },
 
   view2: {
-    position:"absolute",
-    top:10,
-    right:12,
-    backgroundColor:colors.white,
-    height:40,
-    width:180,
-    borderRadius:20,
-    justifyContent:"center",
-    alignItems:"center",
-    marginTop:2, 
+    position: "absolute",
+    top: 10,
+    right: 12,
+    backgroundColor: colors.white,
+    height: 40,
+    width: 180,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 2, 
     zIndex: 8
   },
 
   view3: { 
-    flexDirection:"row",
-    alignItems:"center",
-    //marginRight:15,
-    //backgroundColor:"white",
-    //paddingHorizontal:2,
-    paddingVertical:2,
-    //borderRadius:20
+    flexDirection: "row",
+    alignItems: "center",
+    //marginRight: 15,
+    //backgroundColor: "white",
+    //paddingHorizontal: 2,
+    paddingVertical: 2,
+    //borderRadius: 20
   },
 
   view4: {
-    position:"absolute",
-    top:50,
-    left:12,
-    backgroundColor:colors.white,
-    height:40,
-    width:140,
-    borderRadius:20,
-    justifyContent:"center",
-    alignItems:"center",
-    marginTop:2, 
+    position: "absolute",
+    top: 50,
+    left: 12,
+    backgroundColor: colors.white,
+    height: 40,
+    width: 140,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 2, 
     zIndex: 8
   },
 
   location: {
     width: 20,
     height: 20,
-    borderRadius:9,
-    backgroundColor:colors.black,
-    alignItems:"center",
-    justifyContent:"center"
+    borderRadius: 9,
+    backgroundColor: colors.black,
+    alignItems: "center",
+    justifyContent: "center"
   },
 
   view9: {
-    width:6,
-    height:6,
-    borderRadius:4,
-    backgroundColor:"white"
+    width: 6,
+    height: 6,
+    borderRadius: 4,
+    backgroundColor: "white"
   }
 });

@@ -2,7 +2,7 @@ import React, { createContext, useReducer } from 'react';
 import {OriginReducer, DestinationReducer} from  '../reducers/Reducers';
 
 export const OriginContext = createContext();
-//export const DestinationContext = createContext();
+export const DestinationContext = createContext();
 
 export const OriginContextProvider = (props) => {
     const[origin, dispatchOrigin] = useReducer(OriginReducer, {
@@ -21,25 +21,8 @@ export const OriginContextProvider = (props) => {
 };
 
 
-<<<<<<< Updated upstream
-// export const DestinationContextProvider = (props) => {
-//     const[destination,dispatchDestination] = useReducer(DestinationReducer, {
-//         latitude: null,
-//         longitude: null,
-//         address: "",
-//         name: ""
-//     });
-//     return(
-//         <DestinationContext.Provider
-//             value ={{destination, dispatchDestination}}
-//         >
-//             {props.children}
-//         </DestinationContext.Provider>
-//     );
-// };
-=======
 export const DestinationContextProvider = (props) => {
-    const[destination, dispatchDestination] = useReducer(DestinationReducer, {
+    const[destination,dispatchDestination] = useReducer(DestinationReducer, {
         latitude: null,
         longitude: null,
         address: "",
@@ -47,10 +30,9 @@ export const DestinationContextProvider = (props) => {
     });
     return(
         <DestinationContext.Provider
-            value={{destination, dispatchDestination}}
+            value ={{destination, dispatchDestination}}
         >
             {props.children}
         </DestinationContext.Provider>
     );
 };
->>>>>>> Stashed changes

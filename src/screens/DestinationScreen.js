@@ -1,10 +1,10 @@
+import React, { useState, useContext, useRef } from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity, SafeAreaView } from 'react-native';
-import React, { useState, useContext, useRef} from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { GOOGLE_MAPS_APIKEY } from '@env';
-import { colors, parameters } from '../global/styles';
 
+import { colors, parameters } from '../global/styles';
 import { OriginContext, DestinationContext } from '../contexts/Contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -14,7 +14,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function DestinationScreen({navigation}) {
 const {dispatchOrigin} = useContext(OriginContext);
-//const {dispatchDestination} = useContext(DestinationContext);
+const {dispatchDestination} = useContext(DestinationContext);
 
 const textInput1 = useRef(4);
 const textInput2 = useRef(5);
@@ -22,113 +22,107 @@ const textInput2 = useRef(5);
 const[destination, setDestination] = useState(false);
 
   return (
-    <SafeAreaView style={styles.container}>
-        <View style={styles.view1}>
-            <Ionicons
-                type="material-community"
-                name="arrow-back"
-                color={colors.grey1}
-                size={32}
-                onPress={() => navigation.goBack()}
-            />
-        </View>
-        <View style={styles.view2}>
-            <TouchableOpacity>
-                    {/* <View style ={{top: 25, alignItems: "center"}}> */}
-                        <View style ={styles.view3}>
-                            {/* <Avatar 
-                                rounded
-                                avatarStyle ={{}}
-                                size ={30}
-                                source = {require('../../assets/blankProfilePic.jpg')}
-                                /> */}
-                            <Text style ={{marginLeft: 5}}> For Someone </Text>
-                            <Ionicons 
-                                type="material-community"
-                                name="chevron-down"
-                                color={colors.grey1}
-                                size={26}
-                            />
-                        </View>
-                    {/* </View> */}
-                </TouchableOpacity>
+    <>
+        <View style={styles.container}>
+            <View style={styles.view1}>
+                <Ionicons
+                    type="material-community"
+                    name="arrow-back"
+                    color={colors.grey1}
+                    size={32}
+                    onPress={() => navigation.goBack()}
+                />
             </View>
-            <GooglePlacesAutocomplete 
-                nearbyPlacesAPI = 'GooglePlacesSearch'
-                placeholder = "From..."
-                listViewDisplayed = "auto"
-<<<<<<< Updated upstream
-                debounce ={400}
-                currentLocation ={true}
-                currentLocationLabel='Current location'
-                ref ={textInput1}
-                minLength ={2}
-=======
-                debounce = {400}
-                currentLocation = {true}
-                ref = {textInput1}
-                minLength = {2}
->>>>>>> Stashed changes
-                enablePoweredByContainer = {false}
-                fetchDetails = {true}
-                autoFocus = {true}
-                styles = {autoComplete}
-<<<<<<< Updated upstream
-                query ={{
-                    key:GOOGLE_MAPS_APIKEY,
-                    language:"en",
-                    components: 'country:bd'
-                }}
+            <View style={styles.view2}>
+                <TouchableOpacity>
+                        {/* <View style ={{top: 25, alignItems: "center"}}> */}
+                            <View style ={styles.view3}>
+                                {/* <Avatar 
+                                    rounded
+                                    avatarStyle ={{}}
+                                    size ={30}
+                                    source = {require('../../assets/blankProfilePic.jpg')}
+                                    /> */}
+                                <Text style ={{marginLeft: 5}}> For Someone </Text>
+                                <Ionicons 
+                                    type="material-community"
+                                    name="chevron-down"
+                                    color={colors.grey1}
+                                    size={26}
+                                />
+                            </View>
+                        {/* </View> */}
+                    </TouchableOpacity>
+                </View>
 
-                onPress= {(data, details = null)=>{
-                    dispatchOrigin({type:"ADD_ORIGIN", payload:{
-                        latitude:details.geometry.location.lat,
-                        longitude:details.geometry.location.lng,
-                        address:details.formatted_address,
-                        name:details.name
-=======
-                query = {{
-                    key: GOOGLE_MAPS_APIKEY,
-                    language: "en",
-                    components: "country:bd"
-                }}
+                { destination === false &&
+                    <GooglePlacesAutocomplete 
+                        nearbyPlacesAPI='GooglePlacesSearch'
+                        placeholder="From..."
+                        listViewDisplayed="auto"
+                        debounce={400}
+                        currentLocation={true}
+                        currentLocationLabel='Current location'
+                        ref={textInput1}
+                        minLength={2}
+                        enablePoweredByContainer={false}
+                        fetchDetails={true}
+                        autoFocus={true}
+                        styles={autoComplete}
+                        query={{
+                            key:GOOGLE_MAPS_APIKEY,
+                            language: "en",
+                            components: 'country:bd'
+                        }}
 
-                onPress = {(data, details = null) => {
-                    dispatchOrigin({type: "ADD_ORIGIN", payload: {
-                        latitude: details.geometry.location.lat,
-                        longitude: details.geometry.location.lng,
-                        address: details.formatted_address,
-                        name: details.name
->>>>>>> Stashed changes
-                    }})
+                        onPress={(data, details = null)=>{
+                            dispatchOrigin({type:"ADD_ORIGIN", payload:{
+                                latitude:details.geometry.location.lat,
+                                longitude:details.geometry.location.lng,
+                                address:details.formatted_address,
+                                name:details.name
+                            }})
 
-                    navigation.goBack();
+                            setDestination(true)
+                        }}
+                    />
+                }
 
-<<<<<<< Updated upstream
-                    // setDestination(true)
-                }}
-=======
-                listEmptyComponent = {() => (
-                    <View style={{flex: 1, paddingLeft: 15}}>
-                        <Text> No results were found </Text>
-                    </View>
-                )}
+                { destination === true &&
+                    <GooglePlacesAutocomplete 
+                        nearbyPlacesAPI='GooglePlacesSearch'
+                        placeholder="Going to..."
+                        listViewDisplayed="auto"
+                        debounce={400}
+                        currentLocation={true}
+                        currentLocationLabel='Current location'
+                        ref={textInput2}
+                        minLength={2}
+                        enablePoweredByContainer={false}
+                        fetchDetails={true}
+                        autoFocus={true}
+                        styles={autoComplete}
+                        query={{
+                            key:GOOGLE_MAPS_APIKEY,
+                            language: "en",
+                            components: 'country:bd'
+                        }}
 
-                predefinedPlaces = {[
-                    {
-                      type: 'favorite',
-                      description: 'Work Place',
-                      geometry: {location: {lat: 23.777848, lng: 90.411240}},
-                    },
-                    {
-                      type: 'favorite',
-                      description: 'North End Coffee',
-                      geometry: {location: {lat: 23.785704, lng: 90.417212}},
-                    },
-                ]}
->>>>>>> Stashed changes
-            />
-    </SafeAreaView>
+                        onPress={(data, details = null)=>{
+                            dispatchDestination({type:"ADD_DESTINATION", payload:{
+                                latitude:details.geometry.location.lat,
+                                longitude:details.geometry.location.lng,
+                                address:details.formatted_address,
+                                name:details.name
+                            }})
+
+                            navigation.navigate("RequestScreen", {state: 0});
+
+                        }}
+                    />
+                }
+        </View>
+    </>
   );
 };
 

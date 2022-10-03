@@ -1,27 +1,22 @@
-import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
 import React, { useState, useContext, useEffect, useRef, useMemo, useCallback } from 'react';
-import { colors, parameters } from '../global/styles';
-import MapComponent from '../components/MapComponent';
+import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { color } from 'react-native-reanimated';
-import BottomSheet, { BottomSheetFlatList, BottomSheetSectionList } from '@gorhom/bottom-sheet';
+import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+
+import { colors, parameters } from '../global/styles';
+import MapComponent from '../components/MapComponent';
 import { rideData } from '../global/data';
 import { OriginContext, DestinationContext } from '../contexts/Contexts';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function RequestScreen({navigation, route}) {
+export default function RequestScreen({navigation}) {
   const {origin, dispatchOrigin} = useContext(OriginContext);
   const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
-<<<<<<< Updated upstream
-  // const {destination, dispatchDestination} = useContext(DestinationContext);
-  // const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
-=======
   const {destination, dispatchDestination} = useContext(DestinationContext);
   const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
->>>>>>> Stashed changes
 
   const bottomsheet1 = useRef(1);
 
@@ -29,17 +24,9 @@ export default function RequestScreen({navigation, route}) {
   const handleSheetChange1 = useCallback((index) => {}, []);
 
   useEffect(() => {
-<<<<<<< Updated upstream
     setUserOrigin({latitude: origin.latitude, longitude: origin.longitude});
-    // setUserDestination({latitude: destination.latitude, longitude: destination.longitude})    
-  }, [origin]);
-=======
-    setUserOrigin({latitude: origin.latitude,
-      longitude: origin.longitude});
-    setUserDestination({latitude: destination.latitude,
-      longitude: destination.longitude})    
+    setUserDestination({latitude: destination.latitude, longitude: destination.longitude})    
   }, [origin, destination]);
->>>>>>> Stashed changes
 
   const renderFlatListItems = useCallback(({item}) => (
     <View>
@@ -122,7 +109,7 @@ export default function RequestScreen({navigation, route}) {
         </View>             
       </View>
     </View>
-      <MapComponent userOrigin={userOrigin} />
+      <MapComponent userOrigin={userOrigin} userDestination={userDestination} />
       <BottomSheet
         ref={bottomsheet1}
         //index={route.params.state}

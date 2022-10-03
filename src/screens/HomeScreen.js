@@ -8,7 +8,6 @@ import * as Location from 'expo-location';
 import { colors, parameters } from '../global/styles';
 import { filterData, carsAround } from '../global/data';
 import { mapStyle } from "../global/mapStyle";
-import RequestScreen from './RequestScreen';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -50,7 +49,6 @@ const HomeScreen = ({navigation}) => {
     useEffect(() => {
         checkPermission();
         getLocation()
-       //console.log(latlng)
     , []})
 
   return (
@@ -213,7 +211,7 @@ const HomeScreen = ({navigation}) => {
   )
 }
 
-export default HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {

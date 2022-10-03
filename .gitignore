@@ -10,10 +10,6 @@ npm-debug.*
 *.orig.*
 web-build/
 .env
-<<<<<<< Updated upstream
-app.json
-=======
->>>>>>> Stashed changes
 
 # macOS
 .DS_Store
