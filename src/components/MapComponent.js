@@ -44,6 +44,8 @@ export default class MapComponent extends Component {
             rotateEnabled={true}
             toolbarEnabled={true}
             zoomEnabled={true}
+            showsCompass={true}
+            // showsTraffic={true}
             region={{
               latitude: 23.8103,
               longitude: 90.4125,
