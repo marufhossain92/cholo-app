@@ -1,51 +1,80 @@
-import React, { useState, useContext, useEffect, useRef, useMemo, useCallback } from 'react';
-import { StyleSheet, Text, View, Dimensions, Image, SafeAreaView } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import BottomSheet, { BottomSheetFlatList } from '@gorhom/bottom-sheet';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+  useMemo,
+  useCallback,
+} from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  SafeAreaView,
+} from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
-import { colors, parameters } from '../global/styles';
-import MapComponent from '../components/MapComponent';
-import { rideData } from '../global/data';
-import { OriginContext, DestinationContext } from '../contexts/Contexts';
+import { colors, parameters } from "../global/styles";
+import MapComponent from "../components/MapComponent";
+import { rideData } from "../global/data";
+import { OriginContext, DestinationContext } from "../contexts/Contexts";
 
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get("window").width;
 
-export default function RequestScreen({navigation}) {
-  const {origin, dispatchOrigin} = useContext(OriginContext);
-  const [userOrigin, setUserOrigin] = useState({latitude: origin.latitude, longitude: origin.longitude});
-  const {destination, dispatchDestination} = useContext(DestinationContext);
-  const [userDestination, setUserDestination] = useState({latitude: destination.latitude, longitude: destination.longitude});
+export default function RequestScreen({ navigation, route }) {
+  const { origin, dispatchOrigin } = useContext(OriginContext);
+  const [userOrigin, setUserOrigin] = useState({
+    latitude: origin.latitude,
+    longitude: origin.longitude,
+  });
+  const { destination, dispatchDestination } = useContext(DestinationContext);
+  const [userDestination, setUserDestination] = useState({
+    latitude: destination.latitude,
+    longitude: destination.longitude,
+  });
 
   const bottomsheet1 = useRef(1);
 
-  const snapPoints1 = useMemo(() => ['40%'], []);
+  const snapPoints1 = useMemo(() => ["50%"], []);
   const handleSheetChange1 = useCallback((index) => {}, []);
 
   useEffect(() => {
-    setUserOrigin({latitude: origin.latitude, longitude: origin.longitude});
-    setUserDestination({latitude: destination.latitude, longitude: destination.longitude})    
+    setUserOrigin({ latitude: origin.latitude, longitude: origin.longitude });
+    setUserDestination({
+      latitude: destination.latitude,
+      longitude: destination.longitude,
+    });
   }, [origin, destination]);
 
-  const renderFlatListItems = useCallback(({item}) => (
-    <View>
-      <View style={styles.view10}>
-        <View style={styles.view11}>
-          <Ionicons 
-            type="material-community"
-            name="location"
-            color={colors.white}
-            size={18}
-          />
-        </View>
-        <View>
-          <Text style={{fontSize: 15, color: colors.grey1}}> {item.street} </Text> 
-          <Text style={{color: colors.grey4}}> {item.area} </Text>
+  const renderFlatListItems = useCallback(
+    ({ item }) => (
+      <View>
+        <View style={styles.view10}>
+          <View style={styles.view11}>
+            <Ionicons
+              type="material-community"
+              name="location"
+              color={colors.white}
+              size={18}
+            />
+          </View>
+          <View>
+            <Text style={{ fontSize: 15, color: colors.grey1 }}>
+              {" "}
+              {item.street}{" "}
+            </Text>
+            <Text style={{ color: colors.grey4 }}> {item.area} </Text>
+          </View>
         </View>
       </View>
-    </View>
-  ), []);
+    ),
+    []
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,7 +84,9 @@ export default function RequestScreen({navigation}) {
           name="arrow-back"
           color={colors.grey1}
           size={32}
-          onPress={() => {navigation.goBack()}}
+          onPress={() => {
+            navigation.goBack();
+          }}
         />
       </View>
       <View style={styles.view2}>
@@ -67,7 +98,7 @@ export default function RequestScreen({navigation}) {
               size={30}
               source={require('../../assets/blankProfilePic.jpg')}
             /> */}
-            <Text style={{marginLeft: 5}}> For Someone </Text>
+            <Text style={{ marginLeft: 5 }}> For Someone </Text>
             <Ionicons
               type="material-community"
               name="chevron-down"
@@ -76,15 +107,19 @@ export default function RequestScreen({navigation}) {
             />
           </View>
         </TouchableOpacity>
-        <View style ={styles.view4}>
+        <View style={styles.view4}>
           <View>
-            <Image 
-              style = {styles.image1}
-              source ={require("../../assets/transit.png")}
+            <Image
+              style={styles.image1}
+              source={require("../../assets/transit.png")}
             />
           </View>
           <View>
-            <TouchableOpacity onPress={() => {navigation.navigate("DestinationScreen")}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("DestinationScreen");
+              }}
+            >
               <View style={styles.view6}>
                 <Text style={styles.text1}> Current Location </Text>
               </View>
@@ -95,20 +130,20 @@ export default function RequestScreen({navigation}) {
                   <Text style={styles.text10}> To where? </Text>
                 </View>
               </TouchableOpacity>
-            <View style={styles.view8}>
-              <TouchableOpacity>
-                <Ionicons 
-                  type="material-community"
-                  name="add"
-                  color={colors.black}
-                  size={25}
-                />
-              </TouchableOpacity>   
+              <View style={styles.view8}>
+                <TouchableOpacity>
+                  <Ionicons
+                    type="material-community"
+                    name="add"
+                    color={colors.black}
+                    size={25}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
-        </View>             
+        </View>
       </View>
-    </View>
       <MapComponent userOrigin={userOrigin} userDestination={userDestination} />
       <BottomSheet
         ref={bottomsheet1}
@@ -118,15 +153,15 @@ export default function RequestScreen({navigation}) {
         enablePanDownToClose={true}
       >
         <BottomSheetFlatList
-          keyboardShouldPersistTaps='always'  
+          keyboardShouldPersistTaps="always"
           data={rideData}
-          keyExtractor={item=>item.id}
+          keyExtractor={(item) => item.id}
           renderItem={renderFlatListItems}
           contentContainerStyle={styles.contentContainer}
           ListHeaderComponent={
-            <View style ={styles.view10}>
+            <View style={styles.view10}>
               <View style={styles.view11}>
-                <Ionicons 
+                <Ionicons
                   type="material-community"
                   name="star"
                   color={colors.white}
@@ -134,15 +169,15 @@ export default function RequestScreen({navigation}) {
                 />
               </View>
               <View>
-                  <Text style ={styles.text9}> Saved Places </Text> 
+                <Text style={styles.text9}> Saved Places </Text>
               </View>
             </View>
           }
           ListFooterComponent={
             <View>
-              <View style={{...styles.view10, borderBottomWidth: 0}}>
+              <View style={{ ...styles.view10, borderBottomWidth: 0 }}>
                 <View style={styles.view11}>
-                  <Ionicons 
+                  <Ionicons
                     type="material-community"
                     name="location"
                     color={colors.white}
@@ -150,7 +185,7 @@ export default function RequestScreen({navigation}) {
                   />
                 </View>
                 <View>
-                  <Text style={styles.text9}> Set location on map </Text> 
+                  <Text style={styles.text9}> Set location on map </Text>
                 </View>
               </View>
               {/* <View style ={styles.view10}>
@@ -166,28 +201,28 @@ export default function RequestScreen({navigation}) {
                   <Text style ={styles.text9}> Enter destination later </Text> 
                 </View>
               </View> */}
-            </View> 
-          }        
+            </View>
+          }
         />
       </BottomSheet>
     </SafeAreaView>
-  )
-};
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: parameters.statusBarHeight
+    paddingTop: parameters.statusBarHeight,
   },
 
   container1: {
     flex: 1,
-    paddingTop: parameters.statusBarHeight
+    paddingTop: parameters.statusBarHeight,
   },
 
   contentContainer: {
     flex: 1,
-    alignItems: 'center'
+    alignItems: "center",
   },
 
   view1: {
@@ -200,69 +235,69 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 2, 
-    zIndex: 8
+    marginTop: 2,
+    zIndex: 8,
   },
 
   view2: {
     height: SCREEN_HEIGHT * 0.21,
     alignItems: "center",
     zIndex: 5,
-    backgroundColor:colors.white
+    backgroundColor: colors.white,
   },
-  
+
   view3: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: 2,   
+    marginTop: 2,
     marginBottom: 10,
     backgroundColor: colors.white,
     //height:30,
-    zIndex: 10
+    zIndex: 10,
   },
 
   view4: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   view5: {
     backgroundColor: colors.grey7,
-    width: SCREEN_WIDTH*0.70,
+    width: SCREEN_WIDTH * 0.7,
     height: 40,
     justifyContent: "center",
-    marginTop: 10
+    marginTop: 10,
   },
 
   view6: {
     backgroundColor: colors.grey6,
-    width: SCREEN_WIDTH*0.70,
+    width: SCREEN_WIDTH * 0.7,
     height: 40,
     justifyContent: "center",
     marginTop: 10,
-    paddingLeft: 0
+    paddingLeft: 0,
   },
 
   text1: {
     marginLeft: 10,
     fontSize: 16,
-    color: colors.grey1
+    color: colors.grey1,
   },
 
-  image1: {  
+  image1: {
     height: 70,
     width: 30,
     marginRight: 10,
-    marginTop: 10
+    marginTop: 10,
   },
 
   view7: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   view8: {
-    marginLeft: 10
+    marginLeft: 10,
   },
 
   view10: {
@@ -272,7 +307,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderBottomColor: colors.grey6,
     borderBottomWidth: 1,
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
   },
 
   view11: {
@@ -283,35 +318,35 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 15,
-    marginTop: 15
+    marginTop: 15,
   },
 
   contentContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   view12: {
     alignItems: "center",
     paddingVertical: 10,
     borderBottomWidth: 1,
-    borderBottomColor: colors.grey4
+    borderBottomColor: colors.grey4,
   },
 
   text2: {
     fontSize: 18,
-    color: colors.grey1
+    color: colors.grey1,
   },
 
   text3: {
     fontSize: 16,
     color: colors.black,
     fontWeight: "bold",
-    marginRight: 5
+    marginRight: 5,
   },
 
   text4: {
     color: colors.grey2,
-    marginTop: 4
+    marginTop: 4,
   },
 
   view13: {
@@ -319,7 +354,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     justifyContent: "space-between",
     paddingHorizontal: 15,
-    paddingVertical: 5
+    paddingVertical: 5,
   },
 
   button1: {
@@ -329,7 +364,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 20
+    marginTop: 20,
   },
 
   button2: {
@@ -338,25 +373,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
-    marginHorizontal: 30
+    marginHorizontal: 30,
   },
 
   button1Text: {
     fontSize: 17,
     marginTop: -2,
-    color: colors.black
+    color: colors.black,
   },
 
   button2Text: {
     color: colors.white,
     fontSize: 23,
-    marginTop: -2
+    marginTop: -2,
   },
 
   view14: {
     alignItems: "center",
     flex: 5,
-    flexDirection: "row"
+    flexDirection: "row",
   },
 
   view15: {
@@ -366,12 +401,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    marginRight: 20
+    marginRight: 20,
   },
 
   view16: {
     flexDirection: "row",
-    alignItems: "baseline"
+    alignItems: "baseline",
   },
 
   text5: {
@@ -379,16 +414,12 @@ const styles = StyleSheet.create({
     color: colors.black,
     marginLeft: 3,
     fontWeight: "bold",
-    paddingBottom: 1
+    paddingBottom: 1,
   },
 
-  view17: {
-      
-  },
+  view17: {},
 
-  view18: {
-
-  },
+  view18: {},
 
   view19: {
     flex: 1.7,
@@ -396,53 +427,53 @@ const styles = StyleSheet.create({
   },
 
   icon: {
-    paddingBottom: 2
+    paddingBottom: 2,
   },
 
-  image2: { 
+  image2: {
     height: 60,
-    width: 60 
+    width: 60,
   },
 
   view20: {
-    marginRight: 10 
+    marginRight: 10,
   },
 
-  text6:{
+  text6: {
     fontSize: 15,
     color: colors.black,
-    fontWeight: "bold" 
+    fontWeight: "bold",
   },
 
-  view21:{
+  view21: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 30,
-    marginTop: 15
+    marginTop: 15,
   },
 
   view22: {
     alignItems: "center",
-    marginBottom: -20
+    marginBottom: -20,
   },
 
   sectionHeaderContainer: {
     backgroundColor: "white",
     marginTop: 30,
-    paddingLeft: 15
+    paddingLeft: 15,
   },
 
   text7: {
     fontSize: 28,
     color: colors.black,
-    marginRight: 5
+    marginRight: 5,
   },
 
   text8: {
     fontSize: 15,
     color: colors.grey2,
-    textDecorationLine: "line-through"
+    textDecorationLine: "line-through",
   },
 
   button3: {
@@ -450,42 +481,42 @@ const styles = StyleSheet.create({
     backgroundColor: colors.black,
     alignItems: "center",
     justifyContent: "center",
-    width: SCREEN_WIDTH-110,
-    marginBottom: 10
+    width: SCREEN_WIDTH - 110,
+    marginBottom: 10,
   },
 
   view23: {
-    flexDirection: "row", 
+    flexDirection: "row",
     backgroundColor: colors.cardbackground,
     // elevation:10,
     justifyContent: "space-between",
     alignItems: "flex-end",
     paddingHorizontal: 20,
-    height: 80
+    height: 80,
   },
 
-  button2Image:{
+  button2Image: {
     height: 55,
     width: 55,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.grey6,
-    marginBottom: 10
+    marginBottom: 10,
   },
 
   text9: {
     fontSize: 15,
-    color: colors.grey1
+    color: colors.grey1,
   },
 
   map: {
     marginVertical: 0,
-    width:SCREEN_WIDTH,
-    zIndex: -1
-  }, 
-  
+    width: SCREEN_WIDTH,
+    zIndex: -1,
+  },
+
   centeredView: {
-    zIndex: 14
+    zIndex: 14,
   },
 
   modalView: {
@@ -498,33 +529,33 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2
+      height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-    zIndex: 16
-  }, 
-  
+    zIndex: 16,
+  },
+
   view24: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginVertical: 15,
-    paddingHorizontal: 20   
-  }, 
+    paddingHorizontal: 20,
+  },
 
   view25: {
-    flexDirection: 'row',
-    alignItems: "baseline"
+    flexDirection: "row",
+    alignItems: "baseline",
   },
 
   flatlist: {
-    marginTop: 20
+    marginTop: 20,
   },
 
   text10: {
     color: colors.grey1,
     paddingLeft: 10,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
